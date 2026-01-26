@@ -62,6 +62,24 @@
 - [x] Динамическая загрузка Component2 при нажатии button-2
 - [x] Кэширование загруженных компонентов
 
+### Styling Requirements (Требования к стилям):
+- [x] **Component1**: 
+  - `display: block`
+  - `background-color: yellow` (желтый фон)
+  - `border-radius: 5px` (скругление краев)
+  - Отображает текущую дату в формате `YYYY-MM-DD HH24:MI:SS` при создании экземпляра
+- [x] **Component2**: 
+  - `display: inline-block`
+  - `width: 10%`
+  - `background-color: blue` (синий фон)
+  - `border-radius: 5px` (скругление краев)
+  - Отображает текущую дату в формате `YYYY-MM-DD HH24:MI:SS` при создании экземпляра
+
+### Date Format Requirements (Требования к формату даты):
+- [x] При создании экземпляра Component1 или Component2 внутри компонента должен отображаться текст с текущей датой
+- [x] Формат даты: `YYYY-MM-DD HH24:MI:SS` (например: `2026-01-26 14:30:45`)
+- [x] Дата должна генерироваться в момент создания экземпляра компонента
+
 ### Technical Constraints:
 - Node.js LTS версия (v24.5.0)
 - React LTS версия
@@ -92,11 +110,15 @@
    - Изменения: Создание нового компонента
    - Зависимости: Нет
    - Экспорт: default export для lazy loading
+   - **Стили**: `display: block`, `background-color: yellow`, `border-radius: 5px`
+   - **Функциональность**: Отображает текущую дату в формате `YYYY-MM-DD HH24:MI:SS` при создании экземпляра
 
 5. **Component2.tsx** (Демонстрационный компонент 2)
    - Изменения: Создание нового компонента
    - Зависимости: Нет
    - Экспорт: default export для lazy loading
+   - **Стили**: `display: inline-block`, `width: 10%`, `background-color: blue`, `border-radius: 5px`
+   - **Функциональность**: Отображает текущую дату в формате `YYYY-MM-DD HH24:MI:SS` при создании экземпляра
 
 6. **ComponentLoader.ts** (Сервис загрузки)
    - Изменения: Создание нового сервиса
@@ -146,9 +168,17 @@
 
 4. Демонстрационные компоненты
    - [ ] Создать `src/components/Component1/Component1.tsx`
+     - [ ] Реализовать функциональный компонент
+     - [ ] Добавить функцию форматирования даты в формат `YYYY-MM-DD HH24:MI:SS`
+     - [ ] Отобразить текущую дату при создании экземпляра (использовать `useState` или `new Date()`)
+     - [ ] Применить стили: `display: block`, `background-color: yellow`, `border-radius: 5px`
+     - [ ] Обеспечить default export для lazy loading
    - [ ] Создать `src/components/Component2/Component2.tsx`
-   - [ ] Добавить уникальный контент для каждого компонента
-   - [ ] Обеспечить default export для lazy loading
+     - [ ] Реализовать функциональный компонент
+     - [ ] Добавить функцию форматирования даты в формат `YYYY-MM-DD HH24:MI:SS`
+     - [ ] Отобразить текущую дату при создании экземпляра (использовать `useState` или `new Date()`)
+     - [ ] Применить стили: `display: inline-block`, `width: 10%`, `background-color: blue`, `border-radius: 5px`
+     - [ ] Обеспечить default export для lazy loading
 
 ### Phase 3: ComponentLoader Service (Сервис загрузки)
 1. ComponentLoader класс
@@ -204,6 +234,10 @@
    - [ ] Протестировать повторное нажатие (кэширование)
    - [ ] Протестировать переключение между компонентами
    - [ ] Проверить работу Suspense fallback
+   - [ ] Проверить отображение даты в Component1 (формат `YYYY-MM-DD HH24:MI:SS`)
+   - [ ] Проверить отображение даты в Component2 (формат `YYYY-MM-DD HH24:MI:SS`)
+   - [ ] Проверить стили Component1: `display: block`, желтый фон, скругление 5px
+   - [ ] Проверить стили Component2: `display: inline-block`, `width: 10%`, синий фон, скругление 5px
 
 3. Обработка ошибок
    - [ ] Протестировать обработку ошибок загрузки
@@ -250,6 +284,13 @@
 
 ### Challenge 4: Code splitting и оптимизация bundle
 **Mitigation**: Использовать React.lazy() который автоматически создает отдельные chunks через Vite
+
+### Challenge 5: Форматирование даты в формате YYYY-MM-DD HH24:MI:SS
+**Mitigation**: Использовать JavaScript Date API с методами для форматирования:
+- `getFullYear()`, `getMonth() + 1`, `getDate()` для даты
+- `getHours()`, `getMinutes()`, `getSeconds()` для времени
+- Добавить padding нулями для двузначных значений (например, `String(value).padStart(2, '0')`)
+- Альтернатива: использовать библиотеку date-fns или создать утилиту форматирования
 
 ## Testing Strategy
 

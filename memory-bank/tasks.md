@@ -61,6 +61,7 @@
 - [x] Динамическая загрузка Component1 при нажатии button-1
 - [x] Динамическая загрузка Component2 при нажатии button-2
 - [x] Кэширование загруженных компонентов
+- [x] **ВАЖНО**: При нажатии кнопок создаваемые экземпляры Component1/Component2 **добавляются в конец** контейнера "app-body" (не заменяют существующие)
 
 ### Styling Requirements (Требования к стилям):
 - [x] **Component1**: 
@@ -94,7 +95,8 @@
 1. **App.tsx** (Главный компонент)
    - Изменения: Создание нового компонента
    - Зависимости: ButtonPanel, ComponentContainer, ComponentLoader
-   - State: activeComponent, loadedComponents
+   - State: components (массив объектов с id, type, component), loadedComponents (Set для отслеживания загруженных типов)
+   - **Логика**: При нажатии кнопки добавлять новый экземпляр в конец массива components
 
 2. **ButtonPanel.tsx** (Панель кнопок)
    - Изменения: Создание нового компонента
@@ -104,7 +106,8 @@
 3. **ComponentContainer.tsx** (Контейнер компонентов)
    - Изменения: Создание нового компонента
    - Зависимости: React.Suspense, динамические компоненты
-   - Props: activeComponent, loadedComponents
+   - Props: components (массив объектов с id, type, component)
+   - **Логика**: Рендерить все компоненты из массива в контейнере с id="app-body", каждый с уникальным key
 
 4. **Component1.tsx** (Демонстрационный компонент 1)
    - Изменения: Создание нового компонента
@@ -150,6 +153,8 @@
 1. TypeScript типы
    - [ ] Создать `src/types/index.ts`
    - [ ] Определить интерфейсы: ComponentLoaderConfig, LoadableComponent
+   - [ ] Определить тип ComponentInstance: `{id: string, type: 'Component1' | 'Component2', component: LoadableComponent}`
+   - [ ] Определить тип ComponentsArray: `Array<ComponentInstance>`
    - [ ] Экспортировать типы
 
 2. ButtonPanel компонент
@@ -161,10 +166,12 @@
 
 3. ComponentContainer компонент
    - [ ] Создать `src/components/ComponentContainer.tsx`
-   - [ ] Реализовать интерфейс ComponentContainerProps
+   - [ ] Реализовать интерфейс ComponentContainerProps: `{components: Array<{id: string, type: 'Component1' | 'Component2', component: LoadableComponent}>}`
    - [ ] Добавить контейнер с id="app-body"
-   - [ ] Реализовать Suspense boundary с fallback
-   - [ ] Добавить условный рендеринг активного компонента
+   - [ ] Реализовать рендеринг всех компонентов из массива через map()
+   - [ ] Каждый компонент обернуть в Suspense boundary с fallback
+   - [ ] Использовать уникальный key={component.id} для каждого компонента
+   - [ ] Компоненты должны рендериться в порядке добавления (в конец контейнера)
 
 4. Демонстрационные компоненты
    - [ ] Создать `src/components/Component1/Component1.tsx`
@@ -203,19 +210,23 @@
    - [ ] Создать `src/components/App.tsx`
    - [ ] Импортировать ButtonPanel и ComponentContainer
    - [ ] Импортировать ComponentLoader
-   - [ ] Добавить состояние: activeComponent, loadedComponents
+   - [ ] Добавить состояние: `components` (массив объектов: `{id: string, type: 'Component1' | 'Component2', component: LoadableComponent}`)
+   - [ ] Добавить состояние: `loadedComponents` (Set<string> для отслеживания загруженных типов компонентов)
 
-2. Логика загрузки
-   - [ ] Реализовать `handleButtonClick(componentName)`
-   - [ ] Проверить, загружен ли компонент
-   - [ ] Загрузить компонент через ComponentLoader если не загружен
-   - [ ] Обновить состояние activeComponent
-   - [ ] Обновить состояние loadedComponents
+2. Логика загрузки и добавления компонентов
+   - [ ] Реализовать `handleButtonClick(componentName: 'Component1' | 'Component2')`
+   - [ ] Проверить, загружен ли тип компонента через ComponentLoader.isLoaded()
+   - [ ] Загрузить компонент через ComponentLoader.loadComponent() если не загружен
+   - [ ] Создать новый объект экземпляра: `{id: уникальный ID (timestamp или uuid), type: componentName, component: loadedComponent}`
+   - [ ] **Добавить новый экземпляр в конец массива components** (использовать spread: `[...components, newComponent]`)
+   - [ ] Обновить состояние loadedComponents (добавить тип компонента в Set)
 
 3. Интеграция компонентов
    - [ ] Передать onButtonClick в ButtonPanel
-   - [ ] Передать activeComponent и loadedComponents в ComponentContainer
-   - [ ] Реализовать рендеринг активного компонента
+   - [ ] Передать массив components в ComponentContainer
+   - [ ] В ComponentContainer рендерить все компоненты из массива с использованием map()
+   - [ ] Каждый компонент должен иметь уникальный key={component.id}
+   - [ ] Использовать Suspense для каждого компонента при рендеринге
 
 4. Стилизация
    - [ ] Создать `src/App.css`
@@ -229,13 +240,16 @@
    - [ ] Проверить работу всех компонентов вместе
 
 2. Функциональное тестирование
-   - [ ] Протестировать нажатие button-1 → загрузка Component1
-   - [ ] Протестировать нажатие button-2 → загрузка Component2
-   - [ ] Протестировать повторное нажатие (кэширование)
-   - [ ] Протестировать переключение между компонентами
-   - [ ] Проверить работу Suspense fallback
+   - [ ] Протестировать нажатие button-1 → загрузка Component1 и добавление в конец контейнера
+   - [ ] Протестировать нажатие button-2 → загрузка Component2 и добавление в конец контейнера
+   - [ ] Протестировать повторное нажатие button-1 → новый экземпляр Component1 добавляется в конец (не заменяет)
+   - [ ] Протестировать повторное нажатие button-2 → новый экземпляр Component2 добавляется в конец (не заменяет)
+   - [ ] Протестировать последовательное нажатие button-1, button-2, button-1 → все экземпляры отображаются в контейнере
+   - [ ] Проверить, что компоненты добавляются в конец контейнера (не в начало)
+   - [ ] Проверить работу Suspense fallback для каждого компонента
    - [ ] Проверить отображение даты в Component1 (формат `YYYY-MM-DD HH24:MI:SS`)
    - [ ] Проверить отображение даты в Component2 (формат `YYYY-MM-DD HH24:MI:SS`)
+   - [ ] Проверить, что каждый экземпляр имеет уникальную дату создания
    - [ ] Проверить стили Component1: `display: block`, желтый фон, скругление 5px
    - [ ] Проверить стили Component2: `display: inline-block`, `width: 10%`, синий фон, скругление 5px
 
@@ -277,7 +291,7 @@
 **Mitigation**: Использовать `React.LazyExoticComponent<React.ComponentType<any>>` для типизации lazy компонентов
 
 ### Challenge 2: Управление состоянием загруженных компонентов
-**Mitigation**: Использовать Set для отслеживания загруженных компонентов и Map в ComponentLoader для кэширования
+**Mitigation**: Использовать Set для отслеживания загруженных типов компонентов и Map в ComponentLoader для кэширования. Использовать массив объектов для хранения всех экземпляров компонентов с уникальными ID (timestamp или uuid)
 
 ### Challenge 3: Обработка ошибок при динамической загрузке
 **Mitigation**: Использовать ErrorBoundary и try-catch при загрузке компонентов
@@ -291,6 +305,14 @@
 - `getHours()`, `getMinutes()`, `getSeconds()` для времени
 - Добавить padding нулями для двузначных значений (например, `String(value).padStart(2, '0')`)
 - Альтернатива: использовать библиотеку date-fns или создать утилиту форматирования
+
+### Challenge 6: Добавление компонентов в конец контейнера (накопление экземпляров)
+**Mitigation**: 
+- Использовать массив компонентов вместо одного activeComponent
+- При нажатии кнопки создавать новый объект экземпляра с уникальным ID (Date.now() или crypto.randomUUID())
+- Добавлять в конец массива через spread: `setComponents([...components, newComponent])`
+- В ComponentContainer рендерить все компоненты через map() с уникальными key
+- Каждый экземпляр будет иметь свою дату создания, что обеспечит уникальность
 
 ## Testing Strategy
 

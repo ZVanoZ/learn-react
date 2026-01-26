@@ -296,6 +296,7 @@
 
 ## Creative Phases Required
 - [x] Архитектура - Завершено (creative-architecture.md)
+- [x] Анализ плана и обоснование решений - Завершено (creative-analysis.md)
 - [ ] UI/UX Design - Минималистичный дизайн (опционально, можно пропустить)
 
 ## Dependencies
@@ -325,16 +326,23 @@
 **Mitigation**: Использовать Set для отслеживания загруженных типов компонентов и Map в ComponentLoader для кэширования. Использовать массив объектов для хранения всех экземпляров компонентов с уникальными ID (timestamp или uuid)
 
 ### Challenge 3: Обработка ошибок при динамической загрузке
-**Mitigation**: Использовать ErrorBoundary и try-catch при загрузке компонентов
+**Mitigation**: 
+- Создать ErrorBoundary компонент в Phase 2
+- Обернуть ComponentContainer в ErrorBoundary
+- Показать fallback UI при ошибках загрузки
+- Использовать try-catch при загрузке компонентов через ComponentLoader
+- Логировать ошибки в консоль для отладки
 
 ### Challenge 4: Code splitting и оптимизация bundle
 **Mitigation**: Использовать React.lazy() который автоматически создает отдельные chunks через Vite
 
-### Challenge 5: Форматирование даты в формате YYYY-MM-DD HH24:MI:SS
+### Challenge 5: Форматирование даты в формате YYYY-MM-DD HH:mm:ss
 **Mitigation**: Использовать JavaScript Date API с методами для форматирования:
 - `getFullYear()`, `getMonth() + 1`, `getDate()` для даты
-- `getHours()`, `getMinutes()`, `getSeconds()` для времени
+- `getHours()` (0-23, 24-часовой формат), `getMinutes()`, `getSeconds()` для времени
 - Добавить padding нулями для двузначных значений (например, `String(value).padStart(2, '0')`)
+- **Уточнение**: Формат `HH24:MI:SS` интерпретируется как `HH:mm:ss` (24-часовой формат)
+- Пример: `2026-01-26 14:30:45`
 - Альтернатива: использовать библиотеку date-fns или создать утилиту форматирования
 
 ### Challenge 6: Добавление компонентов в конец контейнера (накопление экземпляров)

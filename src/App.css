@@ -1,0 +1,20 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.button-panel {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f5f5f5;
+}
+
+#app-body {
+  flex: 1;
+  border: 0.2rem solid black;
+  padding: 0.3rem;
+  background: white;
+  min-height: 200px;
+}

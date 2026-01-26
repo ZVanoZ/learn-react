@@ -81,10 +81,14 @@
   - `border: 0.2rem solid black` (черная рамка шириной 0.2rem)
   - `padding: 0.3rem` (внутренний отступ 0.3rem)
   - При пустом состоянии: отображать текст "EMPTY" по центру (использовать flexbox или text-align: center)
+- [x] **ErrorBoundary компонент**:
+  - Обработка ошибок загрузки компонентов
+  - Fallback UI при ошибках
+  - Логирование ошибок в консоль
 
 ### Date Format Requirements (Требования к формату даты):
 - [x] При создании экземпляра Component1 или Component2 внутри компонента должен отображаться текст с текущей датой
-- [x] Формат даты: `YYYY-MM-DD HH24:MI:SS` (например: `2026-01-26 14:30:45`)
+- [x] Формат даты: `YYYY-MM-DD HH:mm:ss` (24-часовой формат, HH: 0-23, например: `2026-01-26 14:30:45`)
 - [x] Дата должна генерироваться в момент создания экземпляра компонента
 
 ### Technical Constraints:
@@ -129,14 +133,14 @@
    - Зависимости: Нет
    - Экспорт: default export для lazy loading
    - **Стили**: `display: block`, `background-color: yellow`, `border-radius: 5px`
-   - **Функциональность**: Отображает текущую дату в формате `YYYY-MM-DD HH24:MI:SS` при создании экземпляра
+   - **Функциональность**: Отображает текущую дату в формате `YYYY-MM-DD HH:mm:ss` (24-часовой формат) при создании экземпляра
 
 5. **Component2.tsx** (Демонстрационный компонент 2)
    - Изменения: Создание нового компонента
    - Зависимости: Нет
    - Экспорт: default export для lazy loading
    - **Стили**: `display: inline-block`, `width: 10%`, `background-color: blue`, `border-radius: 5px`
-   - **Функциональность**: Отображает текущую дату в формате `YYYY-MM-DD HH24:MI:SS` при создании экземпляра
+   - **Функциональность**: Отображает текущую дату в формате `YYYY-MM-DD HH:mm:ss` (24-часовой формат) при создании экземпляра
 
 6. **ComponentLoader.ts** (Сервис загрузки)
    - Изменения: Создание нового сервиса
@@ -165,14 +169,22 @@
    - [ ] Убедиться, что build проходит успешно
 
 ### Phase 2: Base Components (Базовые компоненты)
-1. TypeScript типы
+1. ErrorBoundary компонент
+   - [ ] Создать `src/components/ErrorBoundary.tsx`
+   - [ ] Реализовать классовый компонент с методами `componentDidCatch` и `getDerivedStateFromError`
+   - [ ] Добавить состояние для хранения информации об ошибке
+   - [ ] Реализовать fallback UI с сообщением об ошибке
+   - [ ] Добавить логирование ошибок в консоль
+   - [ ] Обернуть ComponentContainer в ErrorBoundary в App.tsx (Phase 4)
+
+2. TypeScript типы
    - [ ] Создать `src/types/index.ts`
    - [ ] Определить интерфейсы: ComponentLoaderConfig, LoadableComponent
    - [ ] Определить тип ComponentInstance: `{id: string, type: 'Component1' | 'Component2', component: LoadableComponent}`
    - [ ] Определить тип ComponentsArray: `Array<ComponentInstance>`
    - [ ] Экспортировать типы
 
-2. ButtonPanel компонент
+3. ButtonPanel компонент
    - [ ] Создать `src/components/ButtonPanel.tsx`
    - [ ] Реализовать интерфейс ButtonPanelProps: `{onButtonClick: (name: 'Component1' | 'Component2') => void, onClearClick: () => void}`
    - [ ] Добавить три кнопки в порядке: "button-1", "button-2", "clear"
@@ -180,7 +192,7 @@
    - [ ] Реализовать обработчик onClick для clear (вызывает onClearClick)
    - [ ] Добавить базовые стили
 
-3. ComponentContainer компонент
+4. ComponentContainer компонент
    - [ ] Создать `src/components/ComponentContainer.tsx`
    - [ ] Реализовать интерфейс ComponentContainerProps: `{components: Array<{id: string, type: 'Component1' | 'Component2', component: LoadableComponent}>}`
    - [ ] Добавить контейнер с id="app-body"
@@ -192,16 +204,16 @@
    - [ ] Использовать уникальный key={component.id} для каждого компонента
    - [ ] Компоненты должны рендериться в порядке добавления (в конец контейнера)
 
-4. Демонстрационные компоненты
+5. Демонстрационные компоненты
    - [ ] Создать `src/components/Component1/Component1.tsx`
      - [ ] Реализовать функциональный компонент
-     - [ ] Добавить функцию форматирования даты в формат `YYYY-MM-DD HH24:MI:SS`
+     - [ ] Добавить функцию форматирования даты в формат `YYYY-MM-DD HH:mm:ss` (24-часовой формат, HH: 0-23)
      - [ ] Отобразить текущую дату при создании экземпляра (использовать `useState` или `new Date()`)
      - [ ] Применить стили: `display: block`, `background-color: yellow`, `border-radius: 5px`
      - [ ] Обеспечить default export для lazy loading
    - [ ] Создать `src/components/Component2/Component2.tsx`
      - [ ] Реализовать функциональный компонент
-     - [ ] Добавить функцию форматирования даты в формат `YYYY-MM-DD HH24:MI:SS`
+     - [ ] Добавить функцию форматирования даты в формат `YYYY-MM-DD HH:mm:ss` (24-часовой формат, HH: 0-23)
      - [ ] Отобразить текущую дату при создании экземпляра (использовать `useState` или `new Date()`)
      - [ ] Применить стили: `display: inline-block`, `width: 10%`, `background-color: blue`, `border-radius: 5px`
      - [ ] Обеспечить default export для lazy loading
@@ -248,6 +260,7 @@
 4. Интеграция компонентов
    - [ ] Передать onButtonClick и onClearClick в ButtonPanel
    - [ ] Передать массив components в ComponentContainer
+   - [ ] Обернуть ComponentContainer в ErrorBoundary для обработки ошибок загрузки
    - [ ] В ComponentContainer рендерить все компоненты из массива с использованием map() или текст "EMPTY" если массив пуст
    - [ ] Каждый компонент должен иметь уникальный key={component.id}
    - [ ] Использовать Suspense для каждого компонента при рендеринге
@@ -276,8 +289,8 @@
    - [ ] Проверить, что после очистки отображается текст "EMPTY" по центру контейнера
    - [ ] Проверить, что после очистки и повторного добавления компонентов они снова отображаются
    - [ ] Проверить работу Suspense fallback для каждого компонента
-   - [ ] Проверить отображение даты в Component1 (формат `YYYY-MM-DD HH24:MI:SS`)
-   - [ ] Проверить отображение даты в Component2 (формат `YYYY-MM-DD HH24:MI:SS`)
+   - [ ] Проверить отображение даты в Component1 (формат `YYYY-MM-DD HH:mm:ss`, 24-часовой формат)
+   - [ ] Проверить отображение даты в Component2 (формат `YYYY-MM-DD HH:mm:ss`, 24-часовой формат)
    - [ ] Проверить, что каждый экземпляр имеет уникальную дату создания
    - [ ] Проверить стили Component1: `display: block`, желтый фон, скругление 5px
    - [ ] Проверить стили Component2: `display: inline-block`, `width: 10%`, синий фон, скругление 5px
@@ -400,3 +413,18 @@
 - [x] tasks.md обновлен с планом ✅
 
 **✅ ПЛАНИРОВАНИЕ ЗАВЕРШЕНО - ГОТОВО К РЕАЛИЗАЦИИ**
+
+---
+
+## Backlog (Задачи на будущее)
+
+### Улучшение типизации компонентов
+- [ ] **Переход от `any` к строгой типизации props через `React.LazyExoticComponent<React.ComponentType<PropsType>>`**
+  - **Описание**: Улучшить типобезопасность при динамической загрузке компонентов
+  - **Текущее состояние**: Используется `React.LazyExoticComponent<React.ComponentType<any>>` для демо проекта
+  - **Целевое состояние**: Создать generic утилиту для типизированной загрузки компонентов с конкретными props
+  - **Приоритет**: Средний (для production версии)
+  - [ ] Создать generic тип для типизированной загрузки: `type TypedLazyComponent<Props> = React.LazyExoticComponent<React.ComponentType<Props>>`
+  - [ ] Обновить ComponentLoader для поддержки типизированных компонентов
+  - [ ] Обновить типы ComponentInstance для поддержки типизированных props
+  - [ ] Обновить все места использования для строгой типизации

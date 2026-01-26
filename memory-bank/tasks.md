@@ -56,12 +56,14 @@
 
 ### Core Requirements:
 - [x] Приложение на React + TypeScript
-- [x] Две кнопки управления: "button-1" и "button-2"
+- [x] Три кнопки управления: "button-1", "button-2" и "clear"
 - [x] Контейнер "app-body" для динамических компонентов
 - [x] Динамическая загрузка Component1 при нажатии button-1
 - [x] Динамическая загрузка Component2 при нажатии button-2
 - [x] Кэширование загруженных компонентов
 - [x] **ВАЖНО**: При нажатии кнопок создаваемые экземпляры Component1/Component2 **добавляются в конец** контейнера "app-body" (не заменяют существующие)
+- [x] При нажатии кнопки "clear" очищать содержимое контейнера "app-body"
+- [x] Если контейнер "app-body" пуст, отображать в центре текст "EMPTY"
 
 ### Styling Requirements (Требования к стилям):
 - [x] **Component1**: 
@@ -75,6 +77,10 @@
   - `background-color: blue` (синий фон)
   - `border-radius: 5px` (скругление краев)
   - Отображает текущую дату в формате `YYYY-MM-DD HH24:MI:SS` при создании экземпляра
+- [x] **app-body контейнер**:
+  - `border: 0.2rem solid black` (черная рамка шириной 0.2rem)
+  - `padding: 0.3rem` (внутренний отступ 0.3rem)
+  - При пустом состоянии: отображать текст "EMPTY" по центру (использовать flexbox или text-align: center)
 
 ### Date Format Requirements (Требования к формату даты):
 - [x] При создании экземпляра Component1 или Component2 внутри компонента должен отображаться текст с текущей датой
@@ -96,18 +102,27 @@
    - Изменения: Создание нового компонента
    - Зависимости: ButtonPanel, ComponentContainer, ComponentLoader
    - State: components (массив объектов с id, type, component), loadedComponents (Set для отслеживания загруженных типов)
-   - **Логика**: При нажатии кнопки добавлять новый экземпляр в конец массива components
+   - **Логика**: 
+     - При нажатии button-1/button-2: добавлять новый экземпляр в конец массива components
+     - При нажатии clear: очищать массив components (установить в пустой массив [])
+   - **Методы**: 
+     - `handleButtonClick(componentName)` - обработка нажатия button-1/button-2
+     - `handleClearClick()` - обработка нажатия clear (очистка массива)
 
 2. **ButtonPanel.tsx** (Панель кнопок)
    - Изменения: Создание нового компонента
    - Зависимости: Нет
-   - Props: onButtonClick callback
+   - Props: onButtonClick callback (для button-1 и button-2), onClearClick callback (для clear)
+   - **Структура**: Три кнопки: "button-1", "button-2", "clear" (в указанном порядке)
 
 3. **ComponentContainer.tsx** (Контейнер компонентов)
    - Изменения: Создание нового компонента
    - Зависимости: React.Suspense, динамические компоненты
    - Props: components (массив объектов с id, type, component)
-   - **Логика**: Рендерить все компоненты из массива в контейнере с id="app-body", каждый с уникальным key
+   - **Логика**: 
+     - Рендерить все компоненты из массива в контейнере с id="app-body", каждый с уникальным key
+     - Если массив components пуст, отображать текст "EMPTY" по центру контейнера
+     - Контейнер должен иметь стили: `border: 0.2rem solid black`, `padding: 0.3rem`
 
 4. **Component1.tsx** (Демонстрационный компонент 1)
    - Изменения: Создание нового компонента
@@ -159,16 +174,20 @@
 
 2. ButtonPanel компонент
    - [ ] Создать `src/components/ButtonPanel.tsx`
-   - [ ] Реализовать интерфейс ButtonPanelProps
-   - [ ] Добавить две кнопки: "button-1" и "button-2"
-   - [ ] Реализовать обработчики onClick
+   - [ ] Реализовать интерфейс ButtonPanelProps: `{onButtonClick: (name: 'Component1' | 'Component2') => void, onClearClick: () => void}`
+   - [ ] Добавить три кнопки в порядке: "button-1", "button-2", "clear"
+   - [ ] Реализовать обработчики onClick для button-1 и button-2 (вызывают onButtonClick)
+   - [ ] Реализовать обработчик onClick для clear (вызывает onClearClick)
    - [ ] Добавить базовые стили
 
 3. ComponentContainer компонент
    - [ ] Создать `src/components/ComponentContainer.tsx`
    - [ ] Реализовать интерфейс ComponentContainerProps: `{components: Array<{id: string, type: 'Component1' | 'Component2', component: LoadableComponent}>}`
    - [ ] Добавить контейнер с id="app-body"
-   - [ ] Реализовать рендеринг всех компонентов из массива через map()
+   - [ ] Применить стили к контейнеру: `border: 0.2rem solid black`, `padding: 0.3rem`
+   - [ ] Реализовать условный рендеринг:
+     - [ ] Если массив components пуст: отобразить текст "EMPTY" по центру (использовать flexbox: `display: flex`, `justify-content: center`, `align-items: center` или `text-align: center`)
+     - [ ] Если массив не пуст: рендерить все компоненты из массива через map()
    - [ ] Каждый компонент обернуть в Suspense boundary с fallback
    - [ ] Использовать уникальный key={component.id} для каждого компонента
    - [ ] Компоненты должны рендериться в порядке добавления (в конец контейнера)
@@ -221,16 +240,23 @@
    - [ ] **Добавить новый экземпляр в конец массива components** (использовать spread: `[...components, newComponent]`)
    - [ ] Обновить состояние loadedComponents (добавить тип компонента в Set)
 
-3. Интеграция компонентов
-   - [ ] Передать onButtonClick в ButtonPanel
+3. Логика очистки компонентов
+   - [ ] Реализовать `handleClearClick()`
+   - [ ] Очистить массив components (установить в пустой массив: `setComponents([])`)
+   - [ ] Примечание: loadedComponents не очищается (загруженные типы остаются в кэше)
+
+4. Интеграция компонентов
+   - [ ] Передать onButtonClick и onClearClick в ButtonPanel
    - [ ] Передать массив components в ComponentContainer
-   - [ ] В ComponentContainer рендерить все компоненты из массива с использованием map()
+   - [ ] В ComponentContainer рендерить все компоненты из массива с использованием map() или текст "EMPTY" если массив пуст
    - [ ] Каждый компонент должен иметь уникальный key={component.id}
    - [ ] Использовать Suspense для каждого компонента при рендеринге
 
-4. Стилизация
+5. Стилизация
    - [ ] Создать `src/App.css`
-   - [ ] Добавить стили для .app, .button-panel, .app-body
+   - [ ] Добавить стили для .app, .button-panel
+   - [ ] Добавить стили для #app-body: `border: 0.2rem solid black`, `padding: 0.3rem`
+   - [ ] Добавить стили для пустого состояния: центрирование текста "EMPTY" (flexbox или text-align)
    - [ ] Обеспечить минималистичный дизайн
 
 ### Phase 5: Integration & Testing (Интеграция и тестирование)
@@ -246,12 +272,17 @@
    - [ ] Протестировать повторное нажатие button-2 → новый экземпляр Component2 добавляется в конец (не заменяет)
    - [ ] Протестировать последовательное нажатие button-1, button-2, button-1 → все экземпляры отображаются в контейнере
    - [ ] Проверить, что компоненты добавляются в конец контейнера (не в начало)
+   - [ ] Протестировать нажатие clear → все компоненты удаляются из контейнера
+   - [ ] Проверить, что после очистки отображается текст "EMPTY" по центру контейнера
+   - [ ] Проверить, что после очистки и повторного добавления компонентов они снова отображаются
    - [ ] Проверить работу Suspense fallback для каждого компонента
    - [ ] Проверить отображение даты в Component1 (формат `YYYY-MM-DD HH24:MI:SS`)
    - [ ] Проверить отображение даты в Component2 (формат `YYYY-MM-DD HH24:MI:SS`)
    - [ ] Проверить, что каждый экземпляр имеет уникальную дату создания
    - [ ] Проверить стили Component1: `display: block`, желтый фон, скругление 5px
    - [ ] Проверить стили Component2: `display: inline-block`, `width: 10%`, синий фон, скругление 5px
+   - [ ] Проверить стили контейнера app-body: черная рамка 0.2rem, внутренний отступ 0.3rem
+   - [ ] Проверить центрирование текста "EMPTY" в пустом контейнере
 
 3. Обработка ошибок
    - [ ] Протестировать обработку ошибок загрузки
@@ -313,6 +344,13 @@
 - Добавлять в конец массива через spread: `setComponents([...components, newComponent])`
 - В ComponentContainer рендерить все компоненты через map() с уникальными key
 - Каждый экземпляр будет иметь свою дату создания, что обеспечит уникальность
+
+### Challenge 7: Очистка контейнера и отображение пустого состояния
+**Mitigation**: 
+- Реализовать handleClearClick() для очистки массива components: `setComponents([])`
+- В ComponentContainer использовать условный рендеринг: если массив пуст, отображать "EMPTY"
+- Для центрирования использовать flexbox: `display: flex`, `justify-content: center`, `align-items: center` или `text-align: center` с `line-height`
+- Применить стили к контейнеру app-body: `border: 0.2rem solid black`, `padding: 0.3rem`
 
 ## Testing Strategy
 

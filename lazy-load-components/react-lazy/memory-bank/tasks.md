@@ -8,6 +8,14 @@
 - [x] Анализ приложения
 - [x] Составление инструкции
 - [x] Размещение в docs/dev/
+- [x] Reflection complete
+- [ ] Archiving
+
+## Reflection Highlights
+- **What Went Well**: Анализ приложения, Context7 MCP, структура docs/dev (README + architecture.md), обновление Memory Bank.
+- **Challenges**: Отсутствие creative phase для Level 1; progress.md не обновлялся под эту задачу.
+- **Lessons Learned**: Документ-задачи Level 1 — анализ → основной документ + при необходимости вспомогательный; Context7 снижает риск устаревших рекомендаций; явная инструкция «как добавить компонент» полезна для онбординга.
+- **Next Steps**: ARCHIVE mode; при обратной связи — дополнять docs/dev (раздел «Частые проблемы» и т.д.).
 
 ## Requirements
 1. Выполнить анализ приложения.

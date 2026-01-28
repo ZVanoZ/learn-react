@@ -108,6 +108,5 @@
 - Формат даты реализован как `YYYY-MM-DD HH:mm:ss` (24-часовой формат)
 
 ## Archive Reference
-- **Archive Document**: `memory-bank/archive/archive-dynamic-components-20260126.md`
-- **Date Archived**: 2026-01-26
-- **Status**: ✅ COMPLETED & ARCHIVED
+- **Latest:** Создание инструкции для разработчика — `memory-bank/archive/archive-dev-guide-20260128.md` (2026-01-28) ✅
+- **Previous:** Демонстрация динамически подгружаемых компонентов в React — `memory-bank/archive/archive-dynamic-components-20260126.md` (2026-01-26) ✅

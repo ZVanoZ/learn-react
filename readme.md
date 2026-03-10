@@ -35,9 +35,9 @@ DESCRIPTION: description-of-microprogect
 
 LIST:
 
-* <microprogect "react-lazy">
-DIRECTORY: [react-lazy](lazy-load-components/react-lazy)
-DESCRIPTION: ленивая загрузка компонент при помощи React.lazy
+* <microprogect "react-lazy">  
+DIRECTORY: [react-lazy](lazy-load-components/react-lazy)  
+DESCRIPTION: ленивая загрузка компонент при помощи React.lazy  
 
 
 

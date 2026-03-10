@@ -1,0 +1,57 @@
+# Memory Bank: System Patterns
+
+## Architecture Patterns
+
+### 1. Component-Based Architecture
+- Модульная структура с разделением на компоненты
+- Каждый компонент — отдельный модуль с собственной логикой
+
+### 2. Lazy Loading Pattern
+- Использование React.lazy() для динамической загрузки компонентов
+- Code splitting на уровне компонентов
+- Управление загрузкой через Suspense boundary
+
+### 3. State Management Pattern
+- Локальное состояние для отслеживания загруженных компонентов
+- Управление списком активных компонентов через React state в `App.tsx`
+
+## Design Patterns
+
+### 1. Factory Pattern (для компонентов)
+- Функция-фабрика для создания lazy-компонентов
+- Централизованное управление загрузкой компонентов в `ComponentLoader`
+
+### 2. Strategy Pattern (для выбора компонента)
+- Стратегия выбора компонента на основе нажатой кнопки
+- Инкапсуляция логики выбора компонента в компоненте `App` + `ButtonPanel`
+
+### 3. Singleton Pattern (для менеджера компонентов)
+- Единая точка управления загруженными компонентами (`ComponentLoader` как синглтон)
+- Кэширование загруженных компонентов
+
+## Code Patterns
+
+### 1. TypeScript Interfaces
+```typescript
+interface ComponentLoader {
+  loadComponent: (name: string) => Promise<React.ComponentType>;
+  isLoaded: (name: string) => boolean;
+}
+```
+
+### 2. React Component Structure
+```typescript
+const Component: React.FC<Props> = (props) => {
+  return <div>...</div>;
+};
+```
+
+### 3. Lazy Loading Pattern
+```typescript
+const LazyComponent = React.lazy(() => import('./Component'));
+```
+
+### 4. Error Boundary Pattern
+- Обработка ошибок при загрузке компонентов
+- Fallback UI при ошибках загрузки
+

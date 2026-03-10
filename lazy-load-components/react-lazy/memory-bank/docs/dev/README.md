@@ -27,11 +27,11 @@
 | Категория      | Технология              | Версия / примечание      |
 |----------------|-------------------------|---------------------------|
 | UI             | React                   | ^19.2.0                   |
-| Язык           | TypeScript              | ~5.9.3, strict             |
+| Язык           | TypeScript              | ~5.9.3, strict            |
 | Сборка / dev   | Vite                    | ^7.2.4                    |
 | React в Vite   | @vitejs/plugin-react    | ^5.1.1                    |
 
-- **Модули:** ES Modules (`"type": "module"` в `package.json`).
+- **Модули:** ES Modules (`\"type\": \"module\"` в `package.json`).
 - **JSX:** `react-jsx` (tsconfig).
 
 Актуальная документация по технологиям доступна через **Context7 MCP** (например, React lazy/Suspense, Vite CLI и конфигурация).
@@ -42,10 +42,9 @@
 
 ```
 react-lazy/
-├── docs/                    # Документация
-│   ├── dev/                 # Инструкции для разработчика (этот документ)
-│   └── chat/                # История чатов по задачам
-├── memory-bank/             # Memory Bank (задачи, контекст, архив)
+├── memory-bank/             # Локальный Memory Bank (задачи, контекст, архив, dev-доки)
+│   └── docs/
+│       └── dev/             # Инструкции для разработчика (этот документ и architecture.md)
 ├── src/
 │   ├── components/
 │   │   ├── App.tsx              # Корневой компонент, состояние списка компонентов
@@ -53,7 +52,7 @@ react-lazy/
 │   │   ├── ComponentContainer.tsx  # Рендер списка + Suspense по каждому компоненту
 │   │   ├── ErrorBoundary.tsx    # Обработка ошибок загрузки/рендера
 │   │   ├── Component1/          # Демо-компонент 1
-│   │   └── Component2/         # Демо-компонент 2
+│   │   └── Component2/          # Демо-компонент 2
 │   ├── services/
 │   │   └── ComponentLoader.ts  # Синглтон: загрузка и кэш lazy-компонентов
 │   ├── types/
@@ -113,8 +112,6 @@ react-lazy/
 
 Требования: **Node.js** (рекомендуется LTS), **npm**.
 
-> **Docker:** при ошибке `Get "https://registry-1.docker.io/v2/": context deadline exceeded` при `docker compose up` или `docker pull` см. [docker-registry-timeout-diagnostic.md](docker-registry-timeout-diagnostic.md) и при необходимости примените `docs/dev/docker-daemon-ipv4.example.json` как `/etc/docker/daemon.json` (с sudo) и перезапустите Docker.
-
 ```bash
 # Установка зависимостей
 npm install
@@ -158,11 +155,8 @@ npm run preview
 
 ## 8. Memory Bank и рабочий процесс
 
-- Задачи и контекст хранятся в `memory-bank/` (см. правило **memory-bank-paths**).
-- Важные файлы: `tasks.md`, `activeContext.md`, `progress.md`, `projectbrief.md`, `techContext.md`.
-- Для инициализации и анализа задачи используется команда **VAN**; для планирования — **PLAN**; для реализации — **BUILD**; для рефлексии и архива — **REFLECT** и **ARCHIVE**.
-
-Подробности — в `.cursor/rules/isolation_rules/` и визуальных картах режимов (van-mode-map и др.).
+- Задачи и контекст хранятся в локальном `memory-bank/` микропроекта (см. `memory-bank/tasks.md`, `memory-bank/activeContext.md`, `memory-bank/progress.md`, `memory-bank/projectbrief.md`, `memory-bank/techContext.md`).
+- Общий регламент по режимам VAN/PLAN/BUILD/REFLECT/ARCHIVE и работе с микропроектами описан в `../../../memory-bank/docs/microprojects-workflow.md`.
 
 ---
 
@@ -172,13 +166,3 @@ npm run preview
 - **Ошибки загрузки:** всегда держать ленивые компоненты внутри `Suspense` и при необходимости — внутри `ErrorBoundary`, как в текущем приложении.
 - **Экономия токенов (для AI/агентов):** при запросах по коду указывать конкретные файлы или директории (`@src/services/ComponentLoader.ts`, `@src/types/index.ts` и т.д.), чтобы сужать контекст.
 
----
-
-## 10. Ссылки на документацию (Context7)
-
-При необходимости уточнить API или лучшие практики используйте MCP **user-context7**:
-
-- **React:** lazy, Suspense, Error Boundary — библиотека `/websites/react_dev` (или актуальный аналог из resolve-library-id).
-- **Vite:** настройка проекта, скрипты dev/build/preview — библиотека `/vitejs/vite`.
-
-Перед вызовом `query-docs` рекомендуется получить точный library ID через `resolve-library-id` по имени библиотеки и задаче.

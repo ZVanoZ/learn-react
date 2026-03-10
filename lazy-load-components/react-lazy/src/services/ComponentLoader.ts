@@ -6,8 +6,16 @@ class ComponentLoader {
   private loadedComponents: Map<string, LoadableComponent> = new Map();
 
   private componentMap: Record<string, () => Promise<any>> = {
-    Component1: () => import('../components/Component1/Component1'),
-    Component2: () => import('../components/Component2/Component2'),
+    Component1: () => import('../components/Component1/Component1').then((res)=>{
+      return new Promise(resolve => {
+        setTimeout(()=>{resolve(res)}, 2000);
+      })
+    }),
+    Component2: () => import('../components/Component2/Component2').then((res)=>{
+      return new Promise(resolve => {
+        setTimeout(()=>{resolve(res)}, 5000);
+      })
+    }),
   };
 
   private constructor() {}

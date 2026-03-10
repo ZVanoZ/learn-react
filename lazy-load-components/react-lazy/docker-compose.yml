@@ -1,0 +1,26 @@
+services:
+
+  react-lazy-dev:
+    profiles:
+      - dev
+    image: node:20.17-alpine
+    ports:
+      - "6080:80"
+    volumes:
+      - ./src:/app/src
+    environment:
+      - NODE_ENV=development
+    command: npx tsx --inspect src/main.tsx
+
+  # $docker compose --profile prod up react-lazy-prod
+  react-lazy-prod:
+    profiles:
+      - prod
+    container_name: react-lazy-prod
+    # image: httpd:2.4
+    image: nginx:1.26-alpine
+    ports:
+      - "5080:80"
+    volumes:
+#      - ./dist:/usr/local/apache2/htdocs/
+      - ./dist:/var/www/html

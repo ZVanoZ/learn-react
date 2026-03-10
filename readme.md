@@ -2,7 +2,43 @@
 
 Изучение React. Репозитарий для множества микропроектов. 
 
-## Index
+## "memory-bank"
 
-* lazy-load-components - ленивая загрузка компонент 
-  * [react-lazy](lazy-load-components/react-lazy) - при помощи React.lazy
+1. Для разработки используется IDE Cursor
+2. Cursor использует Memory Bank System v0.8 от vanzan01 (см. https://github.com/vanzan01/cursor-memory-bank.git)
+3. Микропроекты описаны в секции <microprojects-list> файла "readme.md".
+
+
+## <microprojects-groups>
+
+Этот раздел для группировки микропроектов по назначению.
+Предназначен для пользователей.
+**НЕ ПРЕДНАЗНАЧЕН** для "cursor-memory-bank"
+
+* Ленивая загрузка компонент
+  * <microprogect "react-lazy">
+
+
+## <microprojects-list>
+
+В этой секции перечень микропроектов для использования "cursor-memory-bank".  
+
+"cursor-memory-bank" должен индексировать эту секцию и следить за актуальностью.  
+
+Каждый микропроект описан В ОТДЕЛЬНОМ ЭЛЕМЕНТЕ СПИСКА строкой вида:
+```text
+* <microprogect "app-name">
+DIRECTORY: path-to-microprogect
+DESCRIPTION: description-of-microprogect
+```
+где: "*" - маркер списка; "app-name" - кодовое название микропроекта; path-to-microprogect - путь к директории микропроекта; description-of-microprogect - текстовое описание микропроекта
+
+LIST:
+
+* <microprogect "react-lazy">
+DIRECTORY: [react-lazy](lazy-load-components/react-lazy)
+DESCRIPTION: ленивая загрузка компонент при помощи React.lazy
+
+
+
+

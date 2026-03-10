@@ -113,6 +113,8 @@ react-lazy/
 
 Требования: **Node.js** (рекомендуется LTS), **npm**.
 
+> **Docker:** при ошибке `Get "https://registry-1.docker.io/v2/": context deadline exceeded` при `docker compose up` или `docker pull` см. [docker-registry-timeout-diagnostic.md](docker-registry-timeout-diagnostic.md) и при необходимости примените `docs/dev/docker-daemon-ipv4.example.json` как `/etc/docker/daemon.json` (с sudo) и перезапустите Docker.
+
 ```bash
 # Установка зависимостей
 npm install

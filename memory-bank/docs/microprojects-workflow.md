@@ -68,7 +68,11 @@
 
 ## RAW: документация, добавленная пользователем вручную
 
-**Тестовый сценарий**
+**Тестовый сценарий: прогоняем новую задачу по цепочке /van -> /plan -> /build -> /reflect -> /archive**
+
+**В итоге, видим что используется "memory-bank" в корне проекта.**
+**@TODO: Подумать правильно ли это. Ранее мы планировали, что каждый микропроект имеет свой "memory-bank".**
+
 1. Инициализируем задачу
 ```text
 /van Настроить dev/prod Docker-запуск для микропроекта react-lazy
@@ -84,7 +88,6 @@
 
 ...
 ```
-@TODO: Подумать правильно ли это. Ранее мы планировали, что каждый микропроект имеет свой "memory-bank". 
 2. Планируем задачу
 ```text
 /plan
@@ -132,4 +135,49 @@
 Стало
 ```text
 - Статус: completed
+```
+5. Архивация
+```text
+/archive
+```
+Добавится: "<git-repo-root>/memory-bank/archive/archive-task-react-lazy-docker.md"
+Изменятся: "<git-repo-root>/memory-bank/["activeContext.md"; "progress.md"; "tasks.md"]"
+* "<git-repo-root>/memory-bank/activeContext.md"
+Было
+```text
+- Фокус: настройка dev/prod Docker-запуска для микропроекта `react-lazy`.
+```
+Стало
+```text
+- Фокус: готов к следующей задаче.
+```
+* "<git-repo-root>/memory-bank/progress.md"
+Было
+```text
+- Статус: completed
+```
+Стало
+```text
+- Статус: archived
+```
+* "<git-repo-root>/memory-bank/tasks.md"
+Было
+```text
+## Новая задача: Docker-запуск для `react-lazy`
+...
+
+### План реализации (PLAN, Level 2)
+...
+
+### Статус планирования
+...
+
+### Рефлексия
+...
+```
+Стало (Удалится все, что в предыдущей секции. Добавится "Архив задач")
+```text
+## Архив задач
+
+- **task-react-lazy-docker** — COMPLETE. Архив: `memory-bank/archive/archive-task-react-lazy-docker.md`
 ```

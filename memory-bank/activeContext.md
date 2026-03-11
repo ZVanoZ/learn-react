@@ -1,6 +1,5 @@
 ## Текущий контекст
 
-- Фокус: настройка dev/prod Docker-запуска для микропроекта `react-lazy`.
-- Текущий микропроект в фокусе: `react-lazy` (`lazy-load-components/react-lazy`) — ленивая загрузка компонент при помощи `React.lazy`.
-- Task ID: `task-react-lazy-docker`
-- Workflow: `/van` → `/plan` → `/build` → `/reflect` для задач инфраструктуры микропроекта.
+- Фокус: готов к следующей задаче.
+- Микропроект в фокусе: `react-lazy` (`lazy-load-components/react-lazy`) — ленивая загрузка компонент при помощи `React.lazy`.
+- Последняя завершённая задача: task-react-lazy-docker (архив: `memory-bank/archive/archive-task-react-lazy-docker.md`).

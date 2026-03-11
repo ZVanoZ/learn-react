@@ -9,10 +9,7 @@
 
 ### task-react-lazy-docker
 
-- Статус: completed
-- Кратко: настройка dev/prod Docker-запуска для микропроекта `react-lazy` (`lazy-load-components/react-lazy`).
-- Состояние:
-  - dev: `react-lazy-dev` (node:22-alpine), Vite на http://localhost:6080.
-  - prod: `react-lazy-prod` (nginx), `./dist` → `/usr/share/nginx/html`, http://localhost:5080.
-  - npm-скрипты и readme обновлены. Рефлексия: `memory-bank/reflection/reflection-task-react-lazy-docker.md`.
+- Статус: archived
+- Архив: `memory-bank/archive/archive-task-react-lazy-docker.md`
+- Итог: dev (node:22, Vite, :6080), prod (nginx, dist, :5080), npm-скрипты, readme обновлён.
 

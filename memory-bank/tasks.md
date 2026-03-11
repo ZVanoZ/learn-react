@@ -10,7 +10,7 @@
 
 - Task ID: `task-react-lazy-docker`
 - Описание: Настроить dev/prod Docker-запуск для микропроекта `react-lazy` (`lazy-load-components/react-lazy`), включая рабочий dev-сервер на Node внутри контейнера и раздачу собранного `dist` через `nginx` в prod.
-- Статус: in_progress
+- Статус: completed
 - Complexity Level: 2 (простое улучшение инфраструктуры без сложных архитектурных решений)
 
 ### План реализации (PLAN, Level 2)

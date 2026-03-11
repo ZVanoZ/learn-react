@@ -74,10 +74,41 @@
 /van Настроить dev/prod Docker-запуск для микропроекта react-lazy
 ```
 В результате будут модифицированы файлы "<git-repo-root>/memory-bank/["activeContext.md", "progress.md", "tasks.md"]".
+В  "<git-repo-root>/memory-bank/tasks.md" добавится:
+```text
+## Новая задача: Docker-запуск для `react-lazy`
+
+...
+
+### План реализации
+
+...
+```
 @TODO: Подумать правильно ли это. Ранее мы планировали, что каждый микропроект имеет свой "memory-bank". 
 2. Планируем задачу
 ```text
 /plan
 ```
 Изменится "<git-repo-root>/memory-bank/tasks.md"
-3. 
+Добавится:
+```text
+### Статус планирования
+- Plan Status: completed
+- Примечание: детальный план зафиксирован на уровне файлов и шагов; можно переходить к фазе `/build` с опорой на этот список.
+
+```
+3. Выполнение плана
+```text
+/build
+```
+Изменится "Статус" в "<git-repo-root>/memory-bank/tasks.md"
+* Было
+```text
+## Новая задача: Docker-запуск для `react-lazy`
+
+- Статус: in_progress
+```
+* Стало
+```text
+- Статус: completed
+```

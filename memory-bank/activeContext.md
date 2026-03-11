@@ -1,6 +1,6 @@
 ## Текущий контекст
 
-- Фокус: инициализация Memory Bank для репозитория `learn-react`.
-- Источник данных: файл `readme.md`, секции `"memory-bank"` и `<microprojects-list>`.
+- Фокус: настройка dev/prod Docker-запуска для микропроекта `react-lazy`.
 - Текущий микропроект в фокусе: `react-lazy` (`lazy-load-components/react-lazy`) — ленивая загрузка компонент при помощи `React.lazy`.
-
+- Task ID: `task-react-lazy-docker`
+- Workflow: `/van` → `/plan` → `/build` → `/reflect` для задач инфраструктуры микропроекта.

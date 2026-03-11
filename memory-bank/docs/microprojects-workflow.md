@@ -75,4 +75,9 @@
 ```
 В результате будут модифицированы файлы "<git-repo-root>/memory-bank/["activeContext.md", "progress.md", "tasks.md"]".
 @TODO: Подумать правильно ли это. Ранее мы планировали, что каждый микропроект имеет свой "memory-bank". 
-2. 
+2. Планируем задачу
+```text
+/plan
+```
+Изменится "<git-repo-root>/memory-bank/tasks.md"
+3. 

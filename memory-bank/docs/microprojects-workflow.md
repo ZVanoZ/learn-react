@@ -112,3 +112,24 @@
 ```text
 - Статус: completed
 ```
+4. Рефлексия
+```text
+/reflect 
+```
+Добавится "<git-repo-root>/memory-bank/reflection/reflection-task-react-lazy-docker.md"
+Изменятся "<git-repo-root>/memory-bank/[progress.md;tasks.md]"
+* В "tasks.md" добавится
+```text
+### Рефлексия
+
+- Reflection: completed
+```
+* В "progress.md" изменится
+Было
+```text
+- Статус: in_progress
+```
+Стало
+```text
+- Статус: completed
+```

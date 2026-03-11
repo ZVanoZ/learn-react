@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "docker:dev": "docker compose --profile dev up react-lazy-dev",
+    "docker:dev:logs": "docker compose logs -f react-lazy-dev",
+    "docker:prod": "docker compose --profile prod up -d react-lazy-prod",
+    "docker:prod:logs": "docker compose logs -f react-lazy-prod"
   },
   "dependencies": {
     "react": "^19.2.0",
